@@ -6,6 +6,8 @@ from selenium.webdriver.common.keys import Keys
 CHROME_DRIVER_PATH =  "E:\chromedriver_win32\chromedriver.exe"
 PROMISED_DOWN = 15
 PROMISED_UP = 5
+
+#ENTER YOUR OWN ID AND PASSWORD
 USER_NAME = ""
 PASSWORD = ""
 
@@ -25,10 +27,10 @@ class InternetSpeedTwitterBot:
         time.sleep(1)
         start = self.driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[1]/a/span[4]')
         start.click()
-        time.sleep(50)
-        self.down = int(self.driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[1]/div/div[2]/span').text)
+        time.sleep(90)
+        self.down = float(self.driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[1]/div/div[2]/span').text)
         print(f"Download Speed: {self.down}")
-        self.up = int(self.driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span').text)
+        self.up = float(self.driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span').text)
         print(f"Upload Speed: {self.up}")
 
         print("Recieved internet speed")
@@ -70,8 +72,8 @@ class InternetSpeedTwitterBot:
 
 bot = InternetSpeedTwitterBot(CHROME_DRIVER_PATH)
 bot.get_internet_speed()
-if bot.down < 15 or bot.up < 5:
+
+if bot.down < PROMISED_DOWN or bot.up < PROMISED_UP:
     bot.tweet_at_provider()
 else:
     bot.driver.quit()
-
